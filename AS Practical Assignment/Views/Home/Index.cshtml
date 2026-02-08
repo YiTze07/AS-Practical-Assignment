@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-page">
+
+    <!-- Password Expired Warning -->
+    @if (ViewData["PasswordExpiredWarning"] != null && (bool)ViewData["PasswordExpiredWarning"])
+    {
+        <div class="alert alert-warning">
+            Your password is older than 90 days. Please <a href="@Url.Action("ChangePassword", "Account")">change your password</a> now.
+        </div>
+    }
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <h2>My Profile</h2>
+        <div class="profile-grid">
+            <div class="profile-item">
+                <span class="profile-label">First Name</span>
+                <span class="profile-value">@ViewData["FirstName"]</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">Last Name</span>
+                <span class="profile-value">@ViewData["LastName"]</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">Gender</span>
+                <span class="profile-value">@ViewData["Gender"]</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">NRIC</span>
+                <span class="profile-value">@ViewData["NRIC"]</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">Email</span>
+                <span class="profile-value">@ViewData["Email"]</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">Date of Birth</span>
+                <span class="profile-value">@ViewData["DateOfBirth"]</span>
+            </div>
+            @if (ViewData["ResumePath"] != null)
+            {
+                <div class="profile-item">
+                    <span class="profile-label">Resume</span>
+                    <span class="profile-value">
+                        <a href="@ViewData["ResumePath"]" target="_blank" class="resume-link">Download Resume</a>
+                    </span>
+                </div>
+            }
+            <div class="profile-item full-width">
+                <span class="profile-label">Who Am I</span>
+                <span class="profile-value">@ViewData["WhoAmI"]</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="dashboard-actions">
+        <a href="@Url.Action("ChangePassword", "Account")" class="btn btn-secondary">Change Password</a>
+    </div>
+</div>

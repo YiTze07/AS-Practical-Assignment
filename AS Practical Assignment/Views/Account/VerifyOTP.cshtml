@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Verify OTP";
+}
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h2>Two-Factor Authentication</h2>
+        <p class="auth-subtitle">We sent a verification code to your email.</p>
+
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-error">@ViewData["ErrorMessage"]</div>
+        }
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+
+        <form asp-action="VerifyOTP" asp-controller="Account" method="post">
+           
+
+            <div class="form-group">
+                <label for="otp">Verification Code</label>
+                <input type="text" name="otp" id="otp" class="form-control otp-input" placeholder="Enter 6-digit code" maxlength="6" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Verify</button>
+        </form>
+
+        <!-- Resend OTP -->
+        <form asp-action="ResendOTP" asp-controller="Account" method="post" style="margin-top:15px;">
+            
+            <button type="submit" class="btn btn-secondary btn-full">Resend Code</button>
+        </form>
+
+        <p class="auth-footer-text">Not you? <a href="@Url.Action("Logout", "Account")">Go back</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Only allow numbers in OTP input
+        document.getElementById('otp').addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+}

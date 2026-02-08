@@ -1,0 +1,170 @@
+﻿@model AS_Practical_Assignment.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h2>Create Account</h2>
+        <p class="auth-subtitle">Join Ace Job Agency today</p>
+
+        <form asp-action="Register" asp-controller="Account" enctype="multipart/form-data" method="post">
+            <input asp-for="RecaptchaToken" type="hidden" id="recaptchaToken" />
+           
+
+            <!-- Validation Summary -->
+            <div asp-validation-summary="All" class="alert alert-error" style="display:none;"></div>
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="Enter first name" autocomplete="off" />
+                <span asp-validation-for="FirstName" class="error-msg"></span>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Enter last name" autocomplete="off" />
+                <span asp-validation-for="LastName" class="error-msg"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label asp-for="Gender"></label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">-- Select Gender --</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Gender" class="error-msg"></span>
+            </div>
+
+            <!-- NRIC -->
+            <div class="form-group">
+                <label asp-for="Nric"></label>
+                <input asp-for="Nric" class="form-control" placeholder="S1234567A" maxlength="9" style="text-transform:uppercase;" />
+                <span asp-validation-for="Nric" class="error-msg"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="you@email.com" autocomplete="off" />
+                <span asp-validation-for="Email" class="error-msg"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" id="passwordInput" placeholder="Min 12 chars" autocomplete="off" />
+                <span asp-validation-for="Password" class="error-msg"></span>
+
+                <!-- Password Strength Meter -->
+                <div class="strength-bar-container">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+                <span class="strength-text" id="strengthText"></span>
+
+                <!-- Password Requirements Checklist -->
+                <div class="password-requirements">
+                    <div class="req-item" id="reqLength"><span class="req-icon">✗</span> At least 12 characters</div>
+                    <div class="req-item" id="reqUpper"><span class="req-icon">✗</span> At least one uppercase letter</div>
+                    <div class="req-item" id="reqLower"><span class="req-icon">✗</span> At least one lowercase letter</div>
+                    <div class="req-item" id="reqNumber"><span class="req-icon">✗</span> At least one number</div>
+                    <div class="req-item" id="reqSpecial"><span class="req-icon">✗</span> At least one special character</div>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" id="confirmPasswordInput" placeholder="Re-enter password" autocomplete="off" />
+                <span asp-validation-for="ConfirmPassword" class="error-msg"></span>
+                <span class="match-text" id="matchText"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label asp-for="DateOfBirth"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" />
+                <span asp-validation-for="DateOfBirth" class="error-msg"></span>
+            </div>
+
+            <!-- Resume Upload -->
+            <div class="form-group">
+                <label asp-for="Resume"></label>
+                <input asp-for="Resume" class="form-control" type="file" id="resumeInput" accept=".docx,.pdf" />
+                <span asp-validation-for="Resume" class="error-msg"></span>
+                <span class="file-hint">Only .docx or .pdf files allowed</span>
+            </div>
+
+            <!-- Who Am I -->
+            <div class="form-group">
+                <label asp-for="WhoAmI"></label>
+                <textarea asp-for="WhoAmI" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+                <span asp-validation-for="WhoAmI" class="error-msg"></span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary btn-full" id="registerBtn">Register</button>
+        </form>
+
+        <p class="auth-footer-text">Already have an account? <a href="@Url.Action("Login", "Account")">Login here</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=@ViewData["ReCaptchaSiteKey"]"></script>
+
+    <!-- Password strength -->
+    <script src="~/js/passwordStrength.js"></script>
+
+    <!-- File validation -->
+    <script>
+        document.getElementById('Resume')?.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (ext !== 'docx' && ext !== 'pdf') {
+                    alert('Only .docx or .pdf files are allowed.');
+                    this.value = '';
+                }
+            }
+        });
+    </script>
+
+    <!-- reCAPTCHA submission -->
+    <script>
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Stop normal submission
+
+            // Disable button to prevent double-submit
+            submitButton.disabled = true;
+            submitButton.textContent = 'Verifying...';
+
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@ViewData["ReCaptchaSiteKey"]', { action: 'register' })
+                    .then(function(token) {
+                        console.log('reCAPTCHA token received:', token.substring(0, 20) + '...');
+                        document.getElementById('recaptchaToken').value = token;
+
+                        // Now submit the form
+                        form.submit();
+                    })
+                    .catch(function(error) {
+                        console.error('reCAPTCHA error:', error);
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Register';
+                        alert('reCAPTCHA verification failed. Please try again.');
+                    });
+            });
+        });
+    </script>
+}
+}

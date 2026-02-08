@@ -1,0 +1,82 @@
+﻿@model AS_Practical_Assignment.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p class="auth-subtitle">Login to your Ace Job Agency account</p>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-error">@TempData["ErrorMessage"]</div>
+        }
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+
+        <form asp-action="Login" asp-controller="Account" method="post">
+            <input asp-for="RecaptchaToken" type="hidden" id="recaptchaToken" />
+
+            <div asp-validation-summary="All" class="alert alert-error" style="display:none;"></div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="you@email.com" autocomplete="off" />
+                <span asp-validation-for="Email" class="error-msg"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" placeholder="Enter your password" autocomplete="off" />
+                <span asp-validation-for="Password" class="error-msg"></span>
+            </div>
+
+            <!-- Forgot Password Link -->
+            <div class="form-group forgot-link">
+                <a href="@Url.Action("ForgotPassword", "Account")">Forgot password?</a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary btn-full" id="loginBtn">Login</button>
+        </form>
+
+        <p class="auth-footer-text">Don't have an account? <a href="@Url.Action("Register", "Account")">Register here</a></p>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js?render=@ViewData["ReCaptchaSiteKey"]"></script>
+
+    <script>
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Verifying...';
+
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@ViewData["ReCaptchaSiteKey"]', { action: 'login' })
+                    .then(function(token) {
+                        console.log('reCAPTCHA token received:', token.substring(0, 20) + '...');
+                        document.getElementById('recaptchaToken').value = token;
+                        form.submit();
+                    })
+                    .catch(function(error) {
+                        console.error('reCAPTCHA error:', error);
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Login';
+                        alert('reCAPTCHA verification failed. Please try again.');
+                    });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,477 @@
+﻿/* ===================== RESET & BASE ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: #2b6cb0;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* ===================== NAVBAR ===================== */
+.navbar {
+    background: linear-gradient(135deg, #1a365d, #2b6cb0);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.navbar-brand a {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-welcome {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+}
+
+.nav-link {
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+    .nav-link:hover {
+        background: rgba(255,255,255,0.15);
+        text-decoration: none;
+    }
+
+.nav-logout {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+    .nav-logout:hover {
+        background: #e53e3e;
+    }
+
+/* ===================== CONTAINER ===================== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+.main-content {
+    flex: 1;
+    padding: 30px 0;
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+    background: #1a365d;
+    color: #a0aec0;
+    text-align: center;
+    padding: 18px;
+    font-size: 0.85rem;
+    margin-top: auto;
+}
+
+/* ===================== ALERTS ===================== */
+.alert {
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-size: 0.92rem;
+}
+
+.alert-success {
+    background: #c6f6d5;
+    color: #276749;
+    border: 1px solid #9ae6b4;
+}
+
+.alert-error {
+    background: #fed7d7;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+}
+
+.alert-warning {
+    background: #fefcbf;
+    color: #975a16;
+    border: 1px solid #fefcbf;
+}
+
+/* ===================== AUTH PAGES (Login / Register) ===================== */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 0;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 40px 35px;
+    width: 100%;
+    max-width: 480px;
+}
+
+    .auth-card h2 {
+        text-align: center;
+        color: #1a365d;
+        margin-bottom: 5px;
+        font-size: 1.6rem;
+    }
+
+.auth-subtitle {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 25px;
+    font-size: 0.92rem;
+}
+
+/* ===================== FORM ELEMENTS ===================== */
+.form-group {
+    margin-bottom: 18px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #4a5568;
+        font-size: 0.9rem;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    color: #333;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: #2b6cb0;
+        box-shadow: 0 0 0 3px rgba(43,108,176,0.15);
+    }
+
+    .form-control::placeholder {
+        color: #a0aec0;
+    }
+
+textarea.form-control {
+    resize: vertical;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+/* ===================== VALIDATION ERRORS ===================== */
+.error-msg {
+    display: block;
+    color: #e53e3e;
+    font-size: 0.82rem;
+    margin-top: 4px;
+}
+
+.file-hint {
+    display: block;
+    color: #a0aec0;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+/* ===================== PASSWORD STRENGTH ===================== */
+.strength-bar-container {
+    margin-top: 8px;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+.strength-text {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.strength-weak {
+    color: #e53e3e;
+}
+
+.strength-fair {
+    color: #dd6b20;
+}
+
+.strength-good {
+    color: #38a169;
+}
+
+.strength-strong {
+    color: #2b6cb0;
+}
+
+/* ===================== PASSWORD REQUIREMENTS ===================== */
+.password-requirements {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f7fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.req-item {
+    font-size: 0.82rem;
+    color: #a0aec0;
+    padding: 2px 0;
+    transition: color 0.2s;
+}
+
+    .req-item .req-icon {
+        margin-right: 6px;
+        font-weight: bold;
+    }
+
+    .req-item.met {
+        color: #38a169;
+    }
+
+        .req-item.met .req-icon::before {
+            content: "✓";
+        }
+
+    .req-item:not(.met) .req-icon::before {
+        content: "✗";
+    }
+
+/* ===================== MATCH TEXT ===================== */
+.match-text {
+    display: block;
+    font-size: 0.82rem;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.match-yes {
+    color: #38a169;
+}
+
+.match-no {
+    color: #e53e3e;
+}
+
+/* ===================== BUTTONS ===================== */
+.btn {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+.btn-primary {
+    background: linear-gradient(135deg, #2b6cb0, #3182ce);
+    color: #fff;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #2c5282, #2b6cb0);
+        text-decoration: none;
+        color: #fff;
+    }
+
+.btn-secondary {
+    background: #edf2f7;
+    color: #4a5568;
+    border: 1px solid #cbd5e0;
+}
+
+    .btn-secondary:hover {
+        background: #e2e8f0;
+        text-decoration: none;
+        color: #4a5568;
+    }
+
+.btn-full {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ===================== AUTH FOOTER TEXT ===================== */
+.auth-footer-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.88rem;
+    color: #718096;
+}
+
+.forgot-link {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+    .forgot-link a {
+        font-size: 0.85rem;
+    }
+
+/* ===================== OTP INPUT ===================== */
+.otp-input {
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+    font-weight: 700;
+    color: #2b6cb0;
+}
+
+/* ===================== DASHBOARD / PROFILE ===================== */
+.dashboard-page {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 35px;
+}
+
+    .profile-card h2 {
+        color: #1a365d;
+        margin-bottom: 22px;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 12px;
+    }
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.profile-item {
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    border: 1px solid #e2e8f0;
+}
+
+    .profile-item.full-width {
+        grid-column: 1 / -1;
+    }
+
+.profile-label {
+    display: block;
+    font-size: 0.78rem;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.profile-value {
+    display: block;
+    font-size: 0.95rem;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.resume-link {
+    color: #2b6cb0;
+    font-weight: 600;
+}
+
+    .resume-link:hover {
+        color: #2c5282;
+    }
+
+.dashboard-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* ===================== ERROR PAGES ===================== */
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.error-card {
+    text-align: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 60px 40px;
+    max-width: 450px;
+    width: 100%;
+}
+
+.error-code {
+    font-size: 4rem;
+    color: #2b6cb0;
+    margin-bottom: 10px;
+}
+
+.error-card h2 {
+    color: #1a365d;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.error-card p {
+    color: #718096;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}

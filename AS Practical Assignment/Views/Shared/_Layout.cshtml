@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="X-UA-Compatible" content="IE=edge" />
+    <title>Ace Job Agency - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">Ace Job Agency</a>
+        </div>
+        <div class="navbar-links">
+            @if (Context.Session.GetString("MemberId") != null)
+            {
+                <span class="navbar-welcome">Welcome, @Context.Session.GetString("MemberName")</span>
+                <a href="@Url.Action("ChangePassword", "Account")" class="nav-link">Change Password</a>
+                <a href="@Url.Action("Logout", "Account")" class="nav-link nav-logout">Logout</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Register", "Account")" class="nav-link">Register</a>
+                <a href="@Url.Action("Login", "Account")" class="nav-link">Login</a>
+            }
+        </div>
+    </nav>
+
+    <!-- Global Messages -->
+    <div class="container">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-error">@TempData["ErrorMessage"]</div>
+        }
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Ace Job Agency. All rights reserved.</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
