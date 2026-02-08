@@ -16,6 +16,15 @@ namespace AS_Practical_Assignment.Services
 
         public async Task SendEmailAsync(string toEmail, string subject, string htmlBody)
         {
+            // Security validation: Prevent accidental password transmission
+            // This service intentionally sends OTPs and password reset tokens,
+            // but blocks any email containing actual passwords in plain text
+            if (htmlBody.Contains("password:", StringComparison.OrdinalIgnoreCase) &&
+        !subject.Contains("Reset", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Attempted to send password in email body");
+            }
+
             string smtpServer = _configuration["Email:SmtpServer"];
             int smtpPort = int.Parse(_configuration["Email:SmtpPort"]);
             string senderEmail = _configuration["Email:SenderEmail"];
